@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Pra você ❤️</title>
+
 <style>
     body {
         margin: 0;
@@ -22,6 +23,7 @@
         color: #ffffff;
         text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
         position: relative;
+        z-index: 2;
     }
 
     #dog {
@@ -51,6 +53,7 @@
         display: none;
     }
 
+    /* pétalas */
     .petal {
         position: fixed;
         top: -10px;
@@ -60,6 +63,7 @@
         border-radius: 80% 50% 80% 50%;
         opacity: 0.7;
         animation: fall linear infinite;
+        z-index: 1;
     }
 
     @keyframes fall {
@@ -68,11 +72,46 @@
             opacity: 0;
         }
     }
+
+    /* Tela inicial */
+    #startScreen {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.75);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-family: Arial;
+        text-align: center;
+        z-index: 10;
+    }
+
+    #startScreen button {
+        padding: 14px 28px; 
+        margin-top: 20px;
+        background: #fff; 
+        color: #d6336c;
+        border-radius: 10px; 
+        border: none;
+        font-size: 18px; 
+        font-weight: bold;
+        cursor: pointer;
+    }
 </style>
 </head>
+
 <body>
 
-<audio id="bgm" autoplay loop>
+<!-- TELA DE INÍCIO (necessária para tocar áudio no celular) -->
+<div id="startScreen">
+    <h2>Toque para começar 💗</h2>
+    <button onclick="startApp()">Começar 🎶</button>
+</div>
+
+<!-- Música -->
+<audio id="bgm" loop>
     <source src="your-song.mp3" type="audio/mpeg">
 </audio>
 
@@ -83,6 +122,17 @@
 </div>
 
 <script>
+function startApp() {
+    document.getElementById("startScreen").style.display = "none";
+
+    const audio = document.getElementById("bgm");
+    audio.play().catch(err => console.log(err));
+
+    iniciarMensagens();
+}
+
+function iniciarMensagens() {
+
     const msgBox = document.getElementById("message");
     const btn = document.getElementById("btn");
 
@@ -98,8 +148,8 @@ Te amo Sweetheart...
 I LOVE YOU <33333
 `;
 
-    let speedInitial = 75; 
-    let speedFinal = 75;
+    let speedInitial = 40;
+    let speedFinal = 40;
 
     function typeWriter(text, speed, callback) {
         let i = 0;
@@ -115,20 +165,20 @@ I LOVE YOU <33333
         typing();
     }
 
-    // agora espera 12 segundos antes da mensagem final
     typeWriter(mensagem1, speedInitial, () => {
         setTimeout(() => {
             msgBox.innerHTML = "";
             typeWriter(mensagemFinal, speedFinal, () => {
                 btn.style.display = "inline-block";
             });
-        }, 12000);
+        }, 4000);
     });
 
     btn.onclick = () => {
         alert("Quero te ver sorrir ❤️");
     };
 
+    // pétalas caindo
     function createPetal() {
         const petal = document.createElement("div");
         petal.classList.add("petal");
@@ -139,6 +189,7 @@ I LOVE YOU <33333
     }
 
     setInterval(createPetal, 400);
+}
 </script>
 
 </body>
