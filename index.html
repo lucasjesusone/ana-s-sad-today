@@ -1,173 +1,68 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-<meta charset="UTF-8">
-<title>Pra você ❤️</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desculpas ❤️</title>
 
-<style>
+  <style>
     body {
-        margin: 0;
-        font-family: "Arial", sans-serif;
-        background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-        height: 100vh;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      margin: 0;
+      padding: 0;
+      background: #f0f0f0;
+      font-family: Arial, sans-serif;
+      text-align: center;
     }
 
-    .container {
-        text-align: center;
-        width: 90%;
-        max-width: 600px;
-        color: #ffffff;
-        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
-        position: relative;
+    #container {
+      padding: 20px;
     }
 
     #dog {
-        width: 200px;
-        margin-bottom: 20px;
-        border-radius: 12px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+      display: none; /* 👈 escondido inicialmente */
+      margin-top: 20px;
+      width: 300px;
+      border-radius: 12px;
     }
 
-    #message {
-        font-size: 22px;
-        min-height: 150px;
-        white-space: pre-line;
+    #btnStart {
+      padding: 15px 25px;
+      background: #ff4f70;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 30px;
     }
 
-    button {
-        padding: 16px 32px;
-        background: #ffffff;
-        border: none;
-        color: #d6336c;
-        font-weight: bold;
-        border-radius: 10px;
-        font-size: 20px;
-        cursor: pointer;
-        box-shadow: 0 4px 14px rgba(255, 255, 255, 0.4);
-        margin-bottom: 25px;
-    }
-
-    /* botão final escondido */
-    #btn {
-        display: none;
-    }
-
-    /* pétalas */
-    .petal {
-        position: fixed;
-        top: -10px;
-        width: 20px;
-        height: 20px;
-        background: pink;
-        border-radius: 80% 50% 80% 50%;
-        opacity: 0.7;
-        animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-        to {
-            transform: translateY(110vh) rotate(360deg);
-            opacity: 0;
-        }
-    }
-</style>
-
+  </style>
 </head>
-
 <body>
 
-<!-- Áudio (inicia só depois do clique) -->
-<audio id="bgm" loop>
-    <source src="your-song.mp3" type="audio/mpeg">
-</audio>
+  <div id="container">
 
-<div class="container">
+    <h1>Eu errei… 😢</h1>
+    <p>Mas quero me redimir de um jeito especial!</p>
 
-    <!-- Botão de início -->
-    <button id="start">Toque aqui para começar ❤️</button>
+    <button id="btnStart">Começar</button>
 
-    <img id="dog" src="sad-dog.jpg" alt="Cachorro triste">
+    <img id="dog" src="https://i.imgur.com/3ZQ3Z8h.jpeg" alt="Cachorrinho triste">
 
-    <div id="message"></div>
+  </div>
 
-    <button id="btn">Clique aqui ❤️</button>
-</div>
+  <audio id="music" src="musica.mp3"></audio>
 
-<script>
-    const msgBox = document.getElementById("message");
-    const btn = document.getElementById("btn");
-    const startBtn = document.getElementById("start");
-    const audio = document.getElementById("bgm");
+  <script>
+    const dog = document.getElementById("dog");
+    const btn = document.getElementById("btnStart");
+    const music = document.getElementById("music");
 
-    const mensagem1 = "Ouça essa música… 🎶\n\n(espera um pouquinho…)";
-
-    const mensagemFinal = `
-Obrigado por existir, querida..
-
-você é especial d+++++++++
-
-Te amo Sweetheart...
-
-I LOVE YOU <33333
-`;
-
-    let speedInitial = 75;
-    let speedFinal = 75;
-
-    function typeWriter(text, speed, callback) {
-        let i = 0;
-        function typing() {
-            if (i < text.length) {
-                msgBox.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typing, speed);
-            } else if (callback) callback();
-        }
-        typing();
-    }
-
-    // Botão de início (iPhone-friendly)
-    startBtn.onclick = () => {
-        startBtn.style.display = "none";
-
-        audio.play()
-            .catch(() => console.log("Autoplay bloqueado, mas continua."));
-
-        // Escrever a primeira msg
-        typeWriter(mensagem1, speedInitial, () => {
-            // aguardando música entrar no clima
-            setTimeout(() => {
-                msgBox.innerHTML = "";
-                // mensagem final romântica
-                typeWriter(mensagemFinal, speedFinal, () => {
-                    btn.style.display = "inline-block";
-                });
-            }, 12000);
-        });
-    };
-
-    // Botão final
-    btn.onclick = () => {
-        alert("Quero te ver sorrir ❤️");
-    };
-
-    // pétalas
-    function createPetal() {
-        const petal = document.createElement("div");
-        petal.classList.add("petal");
-        petal.style.left = Math.random() * 100 + "vw";
-        petal.style.animationDuration = (4 + Math.random() * 5) + "s";
-        document.body.appendChild(petal);
-        setTimeout(() => petal.remove(), 9000);
-    }
-
-    setInterval(createPetal, 400);
-</script>
-
+    btn.addEventListener("click", () => {
+      dog.style.display = "block";    // 👈 mostra o dog
+      music.play();                    // toca música
+      btn.style.display = "none";      // tira o botão se quiser
+    });
+  </script>
 </body>
 </html>
