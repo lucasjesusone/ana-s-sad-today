@@ -1,191 +1,156 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Para você, meu amor ❤️</title>
-
+<title>Pra você ❤️</title>
 <style>
     body {
         margin: 0;
-        padding: 0;
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #ffdde1, #ee9ca7);
         height: 100vh;
         overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
-        text-align: center;
-        background: url("https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1350&q=80");
-        background-size: cover;
-        background-position: center;
-        font-family: "Segoe UI", sans-serif;
     }
 
     .container {
-        background: rgba(255, 240, 246, 0.85);
-        padding: 30px;
-        border-radius: 20px;
-        width: 70%;
-        max-width: 650px;
-        box-shadow: 0px 0px 25px rgba(255, 90, 140, 0.4);
+        text-align: center;
+        width: 90%;
+        max-width: 600px;
+        color: #ffffff;
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
         position: relative;
-        z-index: 10;
     }
 
-    .title {
-        font-size: 2rem;
-        color: #d6336c;
+    #dog {
+        width: 200px;
         margin-bottom: 20px;
-        font-weight: bold;
-        text-shadow: 0px 0px 5px white;
-    }
-
-    .message {
-        color: #6d214f;
-        font-size: 1.3rem;
-        line-height: 1.6;
-        min-height: 180px;
-        white-space: pre-wrap;
-    }
-
-    .heart {
-        font-size: 3rem;
-        margin-top: 20px;
-        animation: beat 1s infinite;
-    }
-
-    @keyframes beat {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.2); }
-        100% { transform: scale(1); }
-    }
-
-    .dog {
-        width: 250px;
-        margin-top: 25px;
-        border-radius: 15px;
-        display: none;
-        animation: fadeIn 1s ease forwards;
-        box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: scale(0.9); }
-        to { opacity: 1; transform: scale(1); }
-    }
-
-    .forgive-btn {
-        margin-top: 25px;
-        padding: 12px 25px;
-        font-size: 1.3rem;
-        background: #ff4f7b;
-        color: white;
-        border: none;
         border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    }
+
+    #message {
+        font-size: 22px;
+        min-height: 150px;
+        white-space: pre-line;
+    }
+
+    button {
+        margin-top: 25px;
+        padding: 14px 28px;
+        background: #ffffff;
+        border: none;
+        color: #d6336c;
+        font-weight: bold;
+        border-radius: 10px;
+        font-size: 18px;
         cursor: pointer;
+        box-shadow: 0 4px 14px rgba(255,255,255,0.4);
         display: none;
-        animation: pop 0.5s ease forwards, pulse 1.5s infinite;
     }
 
-    @keyframes pop {
-        from { transform: scale(0.5); opacity: 0; }
-        to { transform: scale(1); opacity: 1; }
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.06); }
-        100% { transform: scale(1); }
-    }
-
+    /* pétalas */
     .petal {
         position: fixed;
-        top: -10vh;
-        width: 25px;
-        height: 25px;
-        background-image: url("https://pngimg.com/uploads/rose/rose_PNG66733.png");
-        background-size: contain;
-        background-repeat: no-repeat;
+        top: -10px;
+        width: 20px;
+        height: 20px;
+        background: pink;
+        border-radius: 80% 50% 80% 50%;
+        opacity: 0.7;
         animation: fall linear infinite;
-        opacity: 0.9;
-        pointer-events: none;
-        z-index: 1;
     }
 
     @keyframes fall {
-        0% { transform: translateY(0) rotate(0deg); }
-        100% { transform: translateY(110vh) rotate(360deg); }
+        to {
+            transform: translateY(110vh) rotate(360deg);
+            opacity: 0;
+        }
     }
 </style>
 </head>
-
 <body>
 
-<!-- Música: Seu MP3 (coloque na raiz do repo) -->
 <audio id="bgm" autoplay loop>
     <source src="your-song.mp3" type="audio/mpeg">
 </audio>
 
 <div class="container">
-    <div class="title">Tenho algo importante pra te dizer... ❤️</div>
-    <div class="message" id="message"></div>
-
-    <img id="dog" class="dog"
-        src="https://images.unsplash.com/photo-1601758123927-196b70a157a8?auto=format&fit=crop&w=600&q=80"
-        alt="Cachorrinho triste">
-
-    <button id="forgiveBtn" class="forgive-btn">Me perdoa? 🥺💗</button>
-
-    <div class="heart">💖</div>
+    <img id="dog" src="sad-dog.jpg" alt="Cachorro triste">
+    <div id="message"></div>
+    <button id="btn">Clique aqui ❤️</button>
 </div>
 
 <script>
-/* ---- Texto Digitado ---- */
-const text = `
-Você é especial.
-Você é linda.
-Você é maravilhosa.
-Você é adorável.
-E eu sou completamente sortudo por ter você na minha vida.
+    const msgBox = document.getElementById("message");
+    const btn = document.getElementById("btn");
 
-Eu sei que eu vacilei…
-E vim aqui te pedir desculpas, com todo meu coração.
+    const mensagem1 = "Ouça essa música… 🎶\n\n(espera um pouquinho…)";
 
-Você significa muito pra mim. ❤️
+    const mensagemFinal = `
+Eu queria aproveitar este momento  
+pra te dizer algo simples,  
+mas de verdade.  
+
+Você é uma pessoa especial,  
+daquelas que deixam tudo mais leve  
+só por estarem por perto.  
+
+Admiro seu jeito, seu carinho  
+e como você transforma até momentos comuns  
+em algo melhor.  
+
+E… eu queria pedir desculpa  
+se hoje não fui tão presente quanto você merece.  
+
+Você é importante pra mim. ❤️
 `;
 
-let index = 0;
+    let speedInitial = 40;
+    let speedFinal = 40;
 
-function typeWriter() {
-    if (index < text.length) {
-        document.getElementById("message").innerHTML += text.charAt(index);
-        index++;
-        setTimeout(typeWriter, 45);
-    } else {
-        setTimeout(() => {
-            document.getElementById("dog").style.display = "block";
-        }, 600);
-
-        setTimeout(() => {
-            document.getElementById("forgiveBtn").style.display = "inline-block";
-        }, 1500);
+    function typeWriter(text, speed, callback) {
+        let i = 0;
+        function typing() {
+            if (i < text.length) {
+                msgBox.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typing, speed);
+            } else if (callback) {
+                callback();
+            }
+        }
+        typing();
     }
-}
 
-window.onload = typeWriter;
+    // Etapa 1: mostrar "Ouça essa música…"
+    typeWriter(mensagem1, speedInitial, () => {
+        setTimeout(() => {
+            msgBox.innerHTML = "";
+            // Etapa 2: escrever a mensagem suave + desculpa no fim
+            typeWriter(mensagemFinal, speedFinal, () => {
+                btn.style.display = "inline-block";
+            });
+        }, 4000);
+    });
 
-/* ---- Pétalas ---- */
-function createPetal() {
-    const petal = document.createElement("div");
-    petal.classList.add("petal");
-    petal.style.left = Math.random() * 100 + "vw";
-    petal.style.animationDuration = 4 + Math.random() * 5 + "s";
-    petal.style.opacity = Math.random() * 0.8 + 0.4;
-    document.body.appendChild(petal);
+    btn.onclick = () => {
+        alert("Quero te ver sorrir ❤️");
+    };
 
-    setTimeout(() => petal.remove(), 9000);
-}
+    // pétalas caindo
+    function createPetal() {
+        const petal = document.createElement("div");
+        petal.classList.add("petal");
+        petal.style.left = Math.random() * 100 + "vw";
+        petal.style.animationDuration = (4 + Math.random() * 5) + "s";
+        document.body.appendChild(petal);
+        setTimeout(() => petal.remove(), 9000);
+    }
 
-setInterval(createPetal, 500);
+    setInterval(createPetal, 400);
 </script>
 
 </body>
