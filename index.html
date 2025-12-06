@@ -73,11 +73,11 @@
         }
     }
 
-    /* Tela inicial */
+    /* Tela inicial para desbloquear áudio */
     #startScreen {
         position: fixed;
         inset: 0;
-        background: rgba(0,0,0,0.75);
+        background: rgba(0,0,0,0.8);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -89,13 +89,13 @@
     }
 
     #startScreen button {
-        padding: 14px 28px; 
+        padding: 14px 28px;
         margin-top: 20px;
-        background: #fff; 
+        background: #fff;
         color: #d6336c;
-        border-radius: 10px; 
+        border-radius: 10px;
         border: none;
-        font-size: 18px; 
+        font-size: 18px;
         font-weight: bold;
         cursor: pointer;
     }
@@ -104,14 +104,14 @@
 
 <body>
 
-<!-- TELA DE INÍCIO (necessária para tocar áudio no celular) -->
+<!-- Tela inicial obrigatória para liberar áudio no celular -->
 <div id="startScreen">
     <h2>Toque para começar 💗</h2>
     <button onclick="startApp()">Começar 🎶</button>
 </div>
 
 <!-- Música -->
-<audio id="bgm" loop>
+<audio id="bgm" preload="auto" loop>
     <source src="your-song.mp3" type="audio/mpeg">
 </audio>
 
@@ -123,16 +123,23 @@
 
 <script>
 function startApp() {
-    document.getElementById("startScreen").style.display = "none";
-
+    const start = document.getElementById("startScreen");
     const audio = document.getElementById("bgm");
-    audio.play().catch(err => console.log(err));
 
-    iniciarMensagens();
+    start.style.display = "none";
+
+    audio.play()
+        .then(() => {
+            console.log("🎵 Música iniciada com sucesso");
+            iniciarMensagens();
+        })
+        .catch(err => {
+            console.log("⚠ Erro ao tocar música:", err);
+            iniciarMensagens(); // continua mesmo sem áudio
+        });
 }
 
 function iniciarMensagens() {
-
     const msgBox = document.getElementById("message");
     const btn = document.getElementById("btn");
 
@@ -148,8 +155,8 @@ Te amo Sweetheart...
 I LOVE YOU <33333
 `;
 
-    let speedInitial = 40;
-    let speedFinal = 40;
+    let speedInitial = 50;
+    let speedFinal = 55;
 
     function typeWriter(text, speed, callback) {
         let i = 0;
@@ -158,9 +165,7 @@ I LOVE YOU <33333
                 msgBox.innerHTML += text.charAt(i);
                 i++;
                 setTimeout(typing, speed);
-            } else if (callback) {
-                callback();
-            }
+            } else if (callback) callback();
         }
         typing();
     }
@@ -171,7 +176,7 @@ I LOVE YOU <33333
             typeWriter(mensagemFinal, speedFinal, () => {
                 btn.style.display = "inline-block";
             });
-        }, 4000);
+        }, 6000); // aumenta tempo de espera
     });
 
     btn.onclick = () => {
@@ -183,9 +188,9 @@ I LOVE YOU <33333
         const petal = document.createElement("div");
         petal.classList.add("petal");
         petal.style.left = Math.random() * 100 + "vw";
-        petal.style.animationDuration = (4 + Math.random() * 5) + "s";
+        petal.style.animationDuration = (5 + Math.random() * 5) + "s";
         document.body.appendChild(petal);
-        setTimeout(() => petal.remove(), 9000);
+        setTimeout(() => petal.remove(), 11000);
     }
 
     setInterval(createPetal, 400);
