@@ -51,7 +51,6 @@
         display: none;
     }
 
-    /* pétalas */
     .petal {
         position: fixed;
         top: -10px;
@@ -99,8 +98,8 @@ Te amo Sweetheart...
 I LOVE YOU <33333
 `;
 
-    let speedInitial = 40;
-    let speedFinal = 40;
+    let speedInitial = 75; 
+    let speedFinal = 75;
 
     function typeWriter(text, speed, callback) {
         let i = 0;
@@ -116,22 +115,20 @@ I LOVE YOU <33333
         typing();
     }
 
-    // Etapa 1: mostrar "Ouça essa música…"
+    // agora espera 12 segundos antes da mensagem final
     typeWriter(mensagem1, speedInitial, () => {
         setTimeout(() => {
             msgBox.innerHTML = "";
-            // Etapa 2: escrever a mensagem suave + desculpa no fim
             typeWriter(mensagemFinal, speedFinal, () => {
                 btn.style.display = "inline-block";
             });
-        }, 4000);
+        }, 12000);
     });
 
     btn.onclick = () => {
         alert("Quero te ver sorrir ❤️");
     };
 
-    // pétalas caindo
     function createPetal() {
         const petal = document.createElement("div");
         petal.classList.add("petal");
