@@ -37,6 +37,19 @@
         white-space: pre-line;
     }
 
+    #start {
+        padding: 16px 32px;
+        background: #ffffff;
+        border: none;
+        color: #d6336c;
+        font-weight: bold;
+        border-radius: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba(255,255,255,0.4);
+        margin-bottom: 25px;
+    }
+
     button {
         margin-top: 25px;
         padding: 14px 28px;
@@ -72,17 +85,23 @@
 </head>
 <body>
 
-<audio id="bgm" autoplay loop>
+<!-- Música só inicia no clique -->
+<audio id="bgm">
     <source src="your-song.mp3" type="audio/mpeg">
 </audio>
 
 <div class="container">
-    <img id="dog" src="sad-dog.jpg" alt="Cachorro triste">
+    <button id="start">Toque aqui para começar... &lt;3</button>
+
+    <img id="dog" src="sad-dog.jpg" alt="Cachorro triste" style="display:none;">
     <div id="message"></div>
     <button id="btn">Clique aqui ❤️</button>
 </div>
 
 <script>
+    const bgm = document.getElementById("bgm");
+    const start = document.getElementById("start");
+    const dog = document.getElementById("dog");
     const msgBox = document.getElementById("message");
     const btn = document.getElementById("btn");
 
@@ -115,15 +134,25 @@ I LOVE YOU <33333
         typing();
     }
 
-    // agora espera 12 segundos antes da mensagem final
-    typeWriter(mensagem1, speedInitial, () => {
-        setTimeout(() => {
-            msgBox.innerHTML = "";
-            typeWriter(mensagemFinal, speedFinal, () => {
-                btn.style.display = "inline-block";
-            });
-        }, 12000);
-    });
+    function startEverything() {
+        start.style.display = "none";
+        dog.style.display = "block";
+
+        bgm.play();
+
+        typeWriter(mensagem1, speedInitial, () => {
+            setTimeout(() => {
+                msgBox.innerHTML = "";
+                typeWriter(mensagemFinal, speedFinal, () => {
+                    btn.style.display = "inline-block";
+                });
+            }, 12000);
+        });
+
+        setInterval(createPetal, 400);
+    }
+
+    start.onclick = startEverything;
 
     btn.onclick = () => {
         alert("Quero te ver sorrir ❤️");
@@ -137,8 +166,6 @@ I LOVE YOU <33333
         document.body.appendChild(petal);
         setTimeout(() => petal.remove(), 9000);
     }
-
-    setInterval(createPetal, 400);
 </script>
 
 </body>
