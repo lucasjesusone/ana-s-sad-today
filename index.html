@@ -34,6 +34,13 @@
         display: none; /* 👈 ESCONDIDO INICIALMENTE */
     }
 
+    .dog-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+
     #message {
         font-size: 22px;
         min-height: 150px;
@@ -88,7 +95,10 @@
 
     <button id="start">Toque aqui para começar ❤️</button>
 
-    <img id="dog" src="sad-dog.jpg" alt="Cachorro triste">
+    <div class="dog-container">
+        <img id="dog" src="sad-dog.jpg" alt="Cachorro triste">
+    </div>
+
 
     <div id="message"></div>
 
