@@ -53,7 +53,6 @@
         display: none;
     }
 
-    /* pétalas */
     .petal {
         position: fixed;
         top: -10px;
@@ -72,46 +71,12 @@
             opacity: 0;
         }
     }
-
-    /* Tela inicial para desbloquear áudio */
-    #startScreen {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.8);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        font-family: Arial;
-        text-align: center;
-        z-index: 10;
-    }
-
-    #startScreen button {
-        padding: 14px 28px;
-        margin-top: 20px;
-        background: #fff;
-        color: #d6336c;
-        border-radius: 10px;
-        border: none;
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-    }
 </style>
 </head>
 
 <body>
 
-<!-- Tela inicial obrigatória para liberar áudio no celular -->
-<div id="startScreen">
-    <h2>Toque para começar 💗</h2>
-    <button onclick="startApp()">Começar 🎶</button>
-</div>
-
-<!-- Música -->
-<audio id="bgm" preload="auto" loop>
+<audio id="bgm" preload="auto" autoplay loop>
     <source src="your-song.mp3" type="audio/mpeg">
 </audio>
 
@@ -122,30 +87,19 @@
 </div>
 
 <script>
-function startApp() {
-    const start = document.getElementById("startScreen");
-    const audio = document.getElementById("bgm");
+const audio = document.getElementById("bgm");
 
-    start.style.display = "none";
+// Tenta tocar automaticamente (Android permite, iPhone bloqueia)
+audio.play().catch(() => {
+    console.log("Safari bloqueou autoplay 😭 — mas o resto funciona normal!");
+});
 
-    audio.play()
-        .then(() => {
-            console.log("🎵 Música iniciada com sucesso");
-            iniciarMensagens();
-        })
-        .catch(err => {
-            console.log("⚠ Erro ao tocar música:", err);
-            iniciarMensagens(); // continua mesmo sem áudio
-        });
-}
+const msgBox = document.getElementById("message");
+const btn = document.getElementById("btn");
 
-function iniciarMensagens() {
-    const msgBox = document.getElementById("message");
-    const btn = document.getElementById("btn");
+const mensagem1 = "Ouça essa música… 🎶\n\n(espera um pouquinho…)";
 
-    const mensagem1 = "Ouça essa música… 🎶\n\n(espera um pouquinho…)";
-
-    const mensagemFinal = `
+const mensagemFinal = `
 Obrigado por existir, querida..
 
 você é especial d+++++++++
@@ -155,46 +109,46 @@ Te amo Sweetheart...
 I LOVE YOU <33333
 `;
 
-    let speedInitial = 50;
-    let speedFinal = 55;
+let speedInitial = 50;
+let speedFinal = 55;
 
-    function typeWriter(text, speed, callback) {
-        let i = 0;
-        function typing() {
-            if (i < text.length) {
-                msgBox.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typing, speed);
-            } else if (callback) callback();
-        }
-        typing();
+function typeWriter(text, speed, callback) {
+    let i = 0;
+    function typing() {
+        if (i < text.length) {
+            msgBox.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        } else if (callback) callback();
     }
-
-    typeWriter(mensagem1, speedInitial, () => {
-        setTimeout(() => {
-            msgBox.innerHTML = "";
-            typeWriter(mensagemFinal, speedFinal, () => {
-                btn.style.display = "inline-block";
-            });
-        }, 6000); // aumenta tempo de espera
-    });
-
-    btn.onclick = () => {
-        alert("Quero te ver sorrir ❤️");
-    };
-
-    // pétalas caindo
-    function createPetal() {
-        const petal = document.createElement("div");
-        petal.classList.add("petal");
-        petal.style.left = Math.random() * 100 + "vw";
-        petal.style.animationDuration = (5 + Math.random() * 5) + "s";
-        document.body.appendChild(petal);
-        setTimeout(() => petal.remove(), 11000);
-    }
-
-    setInterval(createPetal, 400);
+    typing();
 }
+
+// Primeira frase
+typeWriter(mensagem1, speedInitial, () => {
+    setTimeout(() => {
+        msgBox.innerHTML = "";
+        typeWriter(mensagemFinal, speedFinal, () => {
+            btn.style.display = "inline-block";
+        });
+    }, 6000); // tempo para curtir a música
+});
+
+btn.onclick = () => {
+    alert("Quero te ver sorrir ❤️");
+};
+
+// pétalas caindo
+function createPetal() {
+    const petal = document.createElement("div");
+    petal.classList.add("petal");
+    petal.style.left = Math.random() * 100 + "vw";
+    petal.style.animationDuration = (5 + Math.random() * 5) + "s";
+    document.body.appendChild(petal);
+    setTimeout(() => petal.remove(), 11000);
+}
+
+setInterval(createPetal, 400);
 </script>
 
 </body>
