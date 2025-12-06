@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Desculpa, amor ❤️</title>
+<style>
+    body {
+        background: #ffeef2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    h1 {
+        color: #ff4f7b;
+        font-size: 2.2rem;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    button {
+        padding: 15px 25px;
+        border: none;
+        background: #ff4f7b;
+        color: white;
+        font-size: 1.2rem;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        background: #ff2f62;
+    }
+
+    #modal {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        backdrop-filter: blur(6px);
+        background: rgba(0,0,0,0.3);
+        justify-content: center;
+        align-items: center;
+    }
+
+    #box {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        max-width: 350px;
+        text-align: center;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        animation: pop 0.3s ease;
+    }
+
+    @keyframes pop {
+        from { transform: scale(0.5); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    .dog {
+        width: 100%;
+        border-radius: 12px;
+        margin-bottom: 15px;
+    }
+
+    .heart {
+        font-size: 3rem;
+        animation: beat 1s infinite;
+        margin-bottom: 15px;
+    }
+
+    @keyframes beat {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+</style>
+</head>
+<body>
+
+<!-- Música de fundo -->
+<audio id="bgm" autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c0b7c90a0c.mp3?filename=romantic-ambient-11054.mp3" type="audio/mpeg">
+</audio>
+
+<h1>Clica no botão aqui, amor… ❤️</h1>
+<button onclick="showModal()">Clique aqui</button>
+
+<div id="modal">
+    <div id="box">
+        <img class="dog" src="https://images.unsplash.com/photo-1601758123927-196b70a157a8?auto=format&fit=crop&w=600&q=80" alt="Cachorrinho triste">
+        <div class="heart">❤️</div>
+        <h2>Desculpa, amor</h2>
+        <p>Eu sei que eu vacilei…  
+        <br>Prometo compensar.  
+        <br>Eu te amo muito! ❤️</p>
+        <button onclick="closeModal()">Fechar</button>
+    </div>
+</div>
+
+<script>
+function showModal() {
+    document.getElementById("modal").style.display = "flex";
+    document.getElementById("bgm").volume = 0.25; // volume baixo (0.0 a 1.0)
+}
+
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
+</script>
+
+</body>
+</html>
